@@ -1,0 +1,34 @@
+spring:
+  config:
+    import:
+      - optional:secrets.yml
+  datasource:
+    url: jdbc:postgresql://${DB_HOSTNAME:localhost}:${DB_PORT:5433}/${DB_NAME:goodday_account}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USER:account}
+    password: ${DB_PASSWORD:account1234}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: false
+
+jwt:
+  secret-key: ${jwt.secret-key}
+  access-token-validity-in-seconds: 3600
+  refresh-token-validity-in-seconds: 604800
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOSTNAME:10.1.0.61}:${ZIPKIN_PORT:9411}/api/v2/spans
+
+logging:
+  level:
+    root: INFO
+    com.gooddaytaxi: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+    org.hibernate.SQL: OFF
+    org.hibernate.orm.jdbc.bind: OFF
